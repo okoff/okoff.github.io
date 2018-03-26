@@ -1,0 +1,154 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.blue {
+    color: rgba(255,255,255,.9);
+    text-shadow: #2e7ebd 0 1px 2px;
+    border-color: #60a3d8 #2970a9 #2970a9 #60a3d8;
+    background: #60a3d8 linear-gradient(#89bbe2, #60a3d8 50%, #378bce);
+    box-shadow: inset rgba(255,255,255,.5) 1px 1px;
+}
+
+.orange {
+    color: rgba(255,255,255,.9);
+    border-color: #FDBE33 #000 #ff8e06;
+    background: linear-gradient(#F3AE0F, #E38916) #E38916;
+}
+
+.grey {
+    border-color: rgba(0,0,0,.1);
+    color: rgb(68,68,68);
+    background: rgb(245,245,245) linear-gradient(#f4f4f4, #f1f1f1);
+}
+
+.black {
+    border-color: rgba(0,0,0,.1);
+    color: rgb(245,245,245);
+    background: rgb(68,68,68);
+}
+
+.white {
+    border-color: rgba(0,0,0,.1);
+    color: rgb(0,0,0);
+    background: rgb(255,255,255);
+}
+
+/*Область ввода данных*/
+.form {
+    padding-top: 0;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 0;
+    border: 1px solid;
+}
+
+.form div {
+    padding: 0 10px 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.form div span {
+    display: block;
+    margin-bottom: 10px;
+}
+
+
+.form div h3 {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#number_of_sources {
+    margin-left: 64px;
+}
+
+#background_color {
+    margin-left: 42px;
+}
+
+.base {
+    text-align: right;
+}
+
+/*Область показа результатов*/
+.result {
+    padding: 10px;
+    border: 1px solid;
+}
+
+.result span {
+    margin-right: 20px;
+}
+
+/*Область гистограммы*/
+.diagram {
+    padding: 10px;
+    border: 1px solid;
+}
+
+.diagram.orange {
+    background: linear-gradient(#fce25b, #ecc92b);
+}
+
+.diagram.grey {
+    background: linear-gradient(#f4f4f4, #f1f1f1);
+}
+
+.diagram.blue {
+    background: linear-gradient(#89bbe2, #60a3d8);
+}
+
+.xAxisCategory {
+    text-align: center;
+    border: none;
+}
+
+.yAxisCategory {
+    text-align: right;
+    border: none;
+}
+
+
+.borderDiagram {
+    border: 1px solid black;
+}
+
+
+.blueDiagram {
+    background-color: cornflowerblue;
+}
+
+.orangeDiagram {
+    background-color: orange;
+}
+
+.greyDiagram {
+    background-color: lightgrey;
+}
+
+.yellowDiagram {
+    background-color: yellow;
+}
+
+.blackDiagram {
+    background-color: black;
+}
+
+.whiteDiagram {
+    background-color: white;
+}
+
+.xLine, .yLine {
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+}
+
+.count {
+    text-align: center;
+    font-weight: bold;
+}

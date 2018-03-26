@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Пример ЦПТ</title>
+    <link rel="stylesheet" type="text/css" href="gauss12.css"/>
+    <script type="text/javascript" src="gauss12.js"></script>
+</head>
+<body>
+    <table>
+
+        <!--Область ввода данных    -->
+        <tr>
+            <td class="form grey">
+                <div class="base">
+                    <h3>Основные параметры</h3>
+                    <form action="">
+                        <span>
+                            <label for="number_of_sources">Количество источников: </label>
+                            <input type="text" id="number_of_sources"/>
+                        </span>
+                        <span>
+                            <label for="number_of_elements">Количество элементов в выборке: </label>
+                            <input type="text" id="number_of_elements"/>
+                        </span>
+                        <input type="submit" onclick="count(); return false;" value="Посчитать"/>
+                    </form>
+                </div>
+                <div class="additional">
+                    <h3>Дополнительно</h3>
+                    <div>
+                        <span>
+                            <label><input type="checkbox" onchange="showHideLines(); return false;" id="show_lines">Показать сетку</label>
+                        </span>
+                        <span>
+                            <label><input type="checkbox" checked id="show_entropy">Посчитать энтропию</label>
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <label for="background_color">Цвет фона: </label>
+                            <select name="background" onchange="changeBackgroundColor(); return false;" id="background_color">
+                                <option value="orange">Оранжевый</option>
+                                <option value="blue">Синий</option>
+                                <option value="grey" selected>Серый</option>
+                                <option value="black">Черный</option>
+                                <option value="white">Белый</option>
+                            </select>
+                        </span>
+                        <span>
+                            <label for="diagram_color">Цвет диаграммы: </label>
+                            <select name="diagram" onchange="changeDiagramColor(); return false;" id="diagram_color">
+                                <option value="blue" selected>Синий</option>
+                                <option value="orange">Оранжевый</option>
+                                <option value="grey">Серый</option>
+                                <option value="black">Черный</option>
+                                <option value="white">Белый</option>
+                                <option value="yellow">Желтый</option>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <!--Область гистограммы-->
+        <tr class="diagram grey">
+            <td>
+                <table>
+                    <col width="0px" />
+                    <col width="48px" />
+                    <col width="48px" />
+                    <tr>
+                        <td>&nbsp</td>
+                        <td rowspan="2" class="yAxisCategory">10</td>
+                        <td>&nbsp</td>
+                        <td colspan="40"></td>
+                    </tr>
+
+                    <tr id="tr_10">
+                        <td>&nbsp</td>
+                        <td class="yLine count" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td rowspan="2" class="yAxisCategory">9</td>
+                    </tr>
+
+                    <tr id="tr_9">
+                        <td>&nbsp</td>
+                        <td class="yLine count" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td rowspan="2" class="yAxisCategory">8</td>
+                    </tr>
+
+                    <tr id="tr_8">
+                        <td>&nbsp</td>
+                        <td class="yLine count" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td rowspan="2" class="yAxisCategory">7</td>
+                    </tr>
+
+                    <tr id="tr_7">
+                        <td>&nbsp</td>
+                        <td class="yLine count" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td rowspan="2" class="yAxisCategory">6</td>
+                    </tr>
+
+                    <tr id="tr_6">
+                        <td>&nbsp</td>
+                        <td class="yLine count" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td rowspan="2" class="yAxisCategory">5</td>
+                    </tr>
+
+                    <tr id="tr_5">
+                        <td>&nbsp</td>
+                        <td class="yLine count" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td rowspan="2" class="yAxisCategory">4</td>
+                    </tr>
+
+                    <tr id="tr_4">
+                        <td>&nbsp</td>
+                        <td class="yLine count" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td rowspan="2" class="yAxisCategory">3</td>
+                    </tr>
+
+                    <tr id="tr_3">
+                        <td>&nbsp</td>
+                        <td class="yLine count" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td rowspan="2" class="yAxisCategory">2</td>
+                    </tr>
+
+                    <tr id="tr_2">
+                        <td>&nbsp</td>
+                        <td class="yLine count" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td rowspan="2" class="yAxisCategory">1</td>
+                    </tr>
+
+                    <tr id="tr_1">
+                        <td>&nbsp</td>
+                        <td class="yLine count" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                        <td class="item" colspan="2" rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td rowspan="2" class="yAxisCategory">0</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td class="xLine">&nbsp</td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                        <td colspan="2" class="xLine"></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td>&nbsp</td>
+                        <td colspan="2" class="xAxisCategory"></td>
+                        <td colspan="2" class="xAxisCategory">1</td>
+                        <td colspan="2" class="xAxisCategory">2</td>
+                        <td colspan="2" class="xAxisCategory">3</td>
+                        <td colspan="2" class="xAxisCategory">4</td>
+                        <td colspan="2" class="xAxisCategory">5</td>
+                        <td colspan="2" class="xAxisCategory">6</td>
+                        <td colspan="2" class="xAxisCategory">7</td>
+                        <td colspan="2" class="xAxisCategory">8</td>
+                        <td colspan="2" class="xAxisCategory">9</td>
+                        <td colspan="2" class="xAxisCategory">10</td>
+                        <td colspan="2" class="xAxisCategory">11</td>
+                        <td colspan="2" class="xAxisCategory">12</td>
+                        <td colspan="2" class="xAxisCategory">13</td>
+                        <td colspan="2" class="xAxisCategory">14</td>
+                        <td colspan="2" class="xAxisCategory">15</td>
+                        <td colspan="2" class="xAxisCategory">16</td>
+                        <td colspan="2" class="xAxisCategory">17</td>
+                        <td colspan="2" class="xAxisCategory">18</td>
+                        <td colspan="2" class="xAxisCategory">19</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+        <!--Область показа результатов-->
+        <tr>
+            <td class="result grey">
+
+            </td>
+        </tr>
+
+    </table>
+	<a href="ВПП 1-4.3 Практикум 1.pdf">Текст практикума</a>
+</body>
+</html>
