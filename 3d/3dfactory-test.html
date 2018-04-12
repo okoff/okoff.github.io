@@ -11,7 +11,7 @@
 </div>
     <script type="text/javascript">
 let f3d = new Factory3D();
-let p = f3d.polyhedron(
+f3d.polyhedron(
 [
 	{x:0,y:0,z:0},
 	{x:0,y:1,z:0},
@@ -27,12 +27,42 @@ let p = f3d.polyhedron(
 	{a:2,b:3}
 ]
 );
-p.vertexes.forEach(function(e) {
-	console.log(e);
-});
-p.edges.forEach(function(e) {
-	console.log(e);
-	console.log(p.vertexes[e.a],p.vertexes[e.b]);
+f3d.polyhedron(
+[
+	{x:0,y:0,z:0},
+	{x:0,y:1,z:0},
+	{x:0,y:0,z:1},
+	{x:0,y:1,z:1},
+	{x:1,y:0,z:0},
+	{x:1,y:1,z:0},
+	{x:1,y:0,z:1},
+	{x:1,y:1,z:1}
+],
+[
+	{a:0,b:1},
+	{a:0,b:2},
+	{a:0,b:4},
+	{a:1,b:3},
+	{a:1,b:5},
+	{a:2,b:3},
+	{a:2,b:6},
+	{a:3,b:7},
+	{a:4,b:5},
+	{a:4,b:6},
+	{a:5,b:7},
+	{a:6,b:7}
+]
+);
+f3d.objects.forEach(function(p) {
+	console.log(typeof p + " " + p.vertexes.length);
+	p.vertexes.forEach(function(e) {
+		console.log(e);
+	});
+	p.edges.forEach(function(e) {
+		console.log(e);
+		console.log(p.vertexes[e.a],p.vertexes[e.b]);
+	});
+	console.log("t: " + f3d.triangles(p).length);
 });
 	</script>
 </body>
