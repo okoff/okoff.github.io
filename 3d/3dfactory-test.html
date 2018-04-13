@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>3DFactory Test</title>
+	<script type="text/javascript" src="gl-matrix.js"></script>
     <script type="text/javascript" src="3dfactory-1.js"></script>
 </head>
 
@@ -54,15 +55,15 @@ f3d.polyhedron(
 ]
 );
 f3d.objects.forEach(function(p) {
-	console.log(typeof p + " " + p.vertexes.length);
-	p.vertexes.forEach(function(e) {
-		console.log(e);
-	});
-	p.edges.forEach(function(e) {
-		console.log(e);
-		console.log(p.vertexes[e.a],p.vertexes[e.b]);
-	});
-	console.log("t: " + f3d.triangles(p).length);
+	console.log(typeof p + " вершин: " + p.vertexes.length);
+	//p.vertexes.forEach(function(e) {
+	//	console.log(e);
+	//});
+	//p.edges.forEach(function(e) {
+	//	console.log(e);
+	//	console.log(p.vertexes[e.a],p.vertexes[e.b]);
+	//});
+	console.log("треугольников: " + f3d.triangles(p).length);
 });
 	</script>
 </body>
