@@ -17,7 +17,6 @@ class Factory3D {
 		obj.triangles = [];
 		let e = obj.edges;
 		let m = obj.edges.length;
-		let a = [];
 		
 		function edge_exists(em,e) {
 			for (let f in em) {

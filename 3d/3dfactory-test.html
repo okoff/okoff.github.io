@@ -11,6 +11,8 @@
 <div>
 </div>
     <script type="text/javascript">
+
+console.time("фигура 1");
 let f3d = new Factory3D();
 f3d.polyhedron(
 [
@@ -28,6 +30,9 @@ f3d.polyhedron(
 	{a:2,b:3}
 ]
 );
+console.timeEnd("фигура 1");
+console.time("фигура 2");
+
 f3d.polyhedron(
 [
 	{x:0,y:0,z:0},
@@ -54,17 +59,27 @@ f3d.polyhedron(
 	{a:6,b:7}
 ]
 );
+
+console.timeEnd("фигура 2");
+console.time("треугольники");
+
+f3d.objects.forEach(function(p) {
+	let t = f3d.triangles(p).length;
+});
+console.timeEnd("треугольники");
+
 f3d.objects.forEach(function(p) {
 	console.log(typeof p + " вершин: " + p.vertexes.length);
-	//p.vertexes.forEach(function(e) {
-	//	console.log(e);
-	//});
-	//p.edges.forEach(function(e) {
-	//	console.log(e);
-	//	console.log(p.vertexes[e.a],p.vertexes[e.b]);
-	//});
-	console.log("треугольников: " + f3d.triangles(p).length);
+	p.vertexes.forEach(function(e) {
+		console.log(e);
+	});
+	p.edges.forEach(function(e) {
+		console.log(e);
+		console.log(p.vertexes[e.a],p.vertexes[e.b]);
+	});
+	console.log("треугольников: " + p.triangles.length);
 });
+
 	</script>
 </body>
 </html>
