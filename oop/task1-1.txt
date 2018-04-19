@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+actor P1_1
+actor P1_2
+actor P1_3
+P1 <|-- P1_1
+P1 <|-- P1_2
+P1 <|-- P1_3
+actor M1_1
+actor M1_2
+actor M1_3
+M1_1 --|> M1
+M1_2 --|> M1
+M1_3 --|> M1
+
+package SYSTEM {
+  usecase F1 as "F1 activity"
+  usecase F2 as "F2 activity"
+  usecase F3 as "F3 activity"
+  P1_1 -- (F1)
+  P1_2 -- (F2)
+  P1_3 -- (F3)
+  (F1) -- M1_1
+  (F2) -- M1_2
+  (F3) -- M1_3
+}
+@enduml
