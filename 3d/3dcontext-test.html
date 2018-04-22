@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>3D Context Test</title>
+    <script type="text/javascript" src="3dcontext.js"></script>
+<body>
+<div>
+<canvas id="scene" style="border: 1px solid black; background-color : black;" width="500" height="500"></canvas>
+</div>
+    <script type="text/javascript">
+console.time("контекст");
+var scn = document.getElementById("scene");
+var ctx = new Context3D(scn);
+console.timeEnd("контекст");
+console.log(ctx.contextname);
+
+console.time("фон и ножницы");
+ctx.setColor({r:0.8,g:0.8,b:0.8,a:0.1});
+ctx.drawScene({x:10,y:10,w:scn.width-20,h:scn.height-20});
+console.timeEnd("фон и ножницы");
+
+console.time("кубик - буферы");
+ctx.setBuffers(
+	[
+            // Front face
+            -1.0, -1.0,  1.0,
+            1.0, -1.0,  1.0,
+            1.0,  1.0,  1.0,
+            -1.0,  1.0,  1.0,
+
+            // Back face
+            -1.0, -1.0, -1.0,
+            -1.0,  1.0, -1.0,
+            1.0,  1.0, -1.0,
+            1.0, -1.0, -1.0,
+
+            // Top face
+            -1.0,  1.0, -1.0,
+            -1.0,  1.0,  1.0,
+            1.0,  1.0,  1.0,
+            1.0,  1.0, -1.0,
+
+            // Bottom face
+            -1.0, -1.0, -1.0,
+            1.0, -1.0, -1.0,
+            1.0, -1.0,  1.0,
+            -1.0, -1.0,  1.0,
+
+            // Right face
+            1.0, -1.0, -1.0,
+            1.0,  1.0, -1.0,
+            1.0,  1.0,  1.0,
+            1.0, -1.0,  1.0,
+
+            // Left face
+            -1.0, -1.0, -1.0,
+            -1.0, -1.0,  1.0,
+            -1.0,  1.0,  1.0,
+            -1.0,  1.0, -1.0,
+        ],
+		[
+//            0, 1, 2,      0, 2, 3,    // Front face
+//            4, 5, 6,      4, 6, 7,    // Back face
+//            8, 9, 10,     8, 10, 11,  // Top face
+//            12, 13, 14,   12, 14, 15, // Bottom face
+//            16, 17, 18,   16, 18, 19, // Right face
+//            20, 21, 22,   20, 22, 23  // Left face
+            0, 1, 1, 2, 0, 2, 2, 3, 0, 3,   // Front face
+            4, 5, 5, 6, 4, 6, 6, 7, 4, 7,    // Back face
+            8, 9, 9, 10, 8, 10, 10, 11, 8, 11,  // Top face
+            12, 13, 13, 14, 12, 14, 14, 15, 12, 15, // Bottom face
+            16, 17, 17, 18, 16, 18, 18, 19, 16, 19, // Right face
+            20, 21, 21, 22, 20, 22, 22, 23, 20, 23  // Left face
+        ]
+);
+console.timeEnd("кубик - буферы");
+
+console.time("кубик - шейдеры");
+ctx.setShaders(
+"   attribute vec3 aVertexPosition;" +
+"   void main(void) {" +
+"   	gl_Position = vec4(aVertexPosition * 0.3, 1.0);" +
+"	}",
+"  	precision mediump float;" +
+"	void main() {" +
+"  		gl_FragColor = vec4(0,0,1,1);" +
+"	}"
+);
+console.timeEnd("кубик - шейдеры");
+
+console.time("кубик - сцена");
+ctx.drawScene();
+console.timeEnd("кубик - сцена");
+
+//console.log(ctx.vertices);
+let newv = [];
+let rz = 0;
+
+var timer = setInterval(function() {
+	console.time("кубик - поворот " + rz);
+	for (let tt=0; tt<ctx.vertices.length; tt += 3) {
+		let x = ctx.vertices[tt]   * (1 + rz);
+		let y = ctx.vertices[tt+1] * (1 + rz);
+		let z = ctx.vertices[tt+2] * (1 + rz);
+		x = x + z * rz;
+		y = y + z * rz;
+		//z = z + x * 0.3;
+		newv[tt]   = x;
+		newv[tt+1] = y;
+		newv[tt+2] = z;
+	}
+	//console.log(newv);
+	ctx.gl.bufferData(ctx.gl.ARRAY_BUFFER, new Float32Array(newv), ctx.gl.STATIC_DRAW);
+	ctx.drawScene({x:10,y:10,w:scn.width-20,h:scn.height-20});
+	console.timeEnd("кубик - поворот " + rz);
+	rz += Math.sin(Math.PI/128);
+	if (rz>=Math.sin(Math.PI/8)) {
+		clearInterval(timer);
+	}
+}, 100);
+
+	</script>
+</body>
+</html>
