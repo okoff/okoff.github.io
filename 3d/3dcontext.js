@@ -71,7 +71,7 @@ class Context3D {
 		
 		this.VertexIndexBuffer = this.gl.createBuffer();
         this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.VertexIndexBuffer);
-        this.VertexIndexBuffer.itemSize = 1;
+        this.VertexIndexBuffer.itemSize = 2;
         this.VertexIndexBuffer.numItems = triangles.length;
         this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(triangles), this.gl.STATIC_DRAW);
 	}
