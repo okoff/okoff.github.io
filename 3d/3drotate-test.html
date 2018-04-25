@@ -5,12 +5,12 @@
 <meta charset="utf-8" />
 </head>
 <body>
-<canvas id="canvas3D" width="400" height="400">Ваш браузер не поддерживает элемент canvas</canvas>
+<canvas id="canvas3D" style="border: 1px solid black;" width="400" height="400">Ваш браузер не поддерживает элемент canvas</canvas>
 <script  type="text/javascript" src="gl-matrix.js"></script>
 <!-- фрагментный шейдер -->
 <script id="shader-fs" type="x-shader/x-fragment">
   void main(void) {
-    gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
+    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
   }
 </script>
 <!-- вершинный шейдер -->
@@ -139,23 +139,38 @@ window.onload=function(){
         initShaders();
          
         initBuffers();
-        setupWebGL();
+ //       setupWebGL();
         setMatrixUniforms();
         draw(); 
 		let gd = 0;
+		let t1 = 0;
+		let t2 = 0;
+		let nn = 0;
+		let t0 = 0;
 		var timer = setInterval(function() {
-			console.time("поворот " + gd);
+//			console.time("поворот " + gd);
+			t0 = performance.now();
 			mat4.identity(mvMatrix);
 			mat4.rotate(mvMatrix,mvMatrix, gd, [1, 1, 1]);
-			console.timeEnd("поворот " + gd);
-			console.time("отрисовка " + gd);
+			t1 += performance.now()-t0;
+//			console.timeEnd("поворот " + gd);
+
+//			console.time("отрисовка " + gd);
 			//gl.clearColor(0.0, 0.0, 0.0, 1.0);  
-			gl.clear(gl.COLOR_BUFFER_BIT); 
+			//gl.clear(gl.COLOR_BUFFER_BIT); 
 			setMatrixUniforms();
+			t0 = performance.now();
+			gl.clear(gl.COLOR_BUFFER_BIT); 
 			gl.drawElements(gl.LINES, indexBuffer.numberOfItems, gl.UNSIGNED_SHORT,0);
-			console.timeEnd("отрисовка " + gd);
+			
+			t2 += performance.now()-t0;
+			nn++;
+			
+//			console.timeEnd("отрисовка " + gd);
+//			console.log(performance.now());
 			gd += Math.PI/1000;
 			if (gd>=Math.sin(Math.PI/4)) {
+				console.log("avg " + nn + " t1:" + t1/nn + " t2:" + t2/nn);
 				clearInterval(timer);
 			}
 		},15);
