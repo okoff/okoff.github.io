@@ -110,7 +110,7 @@ function draw() {
 }
 function setupWebGL()
 {
-    gl.clearColor(0.0, 0.0, 0.0, 1.0);  
+    gl.clearColor(0.9, 0.9, 0.9, 1.0);  
     gl.clear(gl.COLOR_BUFFER_BIT);  
                  
     gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
@@ -139,7 +139,7 @@ window.onload=function(){
         initShaders();
          
         initBuffers();
- //       setupWebGL();
+        setupWebGL();
         setMatrixUniforms();
         draw(); 
 		let gd = 0;
@@ -148,16 +148,11 @@ window.onload=function(){
 		let nn = 0;
 		let t0 = 0;
 		var timer = setInterval(function() {
-//			console.time("поворот " + gd);
 			t0 = performance.now();
 			mat4.identity(mvMatrix);
 			mat4.rotate(mvMatrix,mvMatrix, gd, [1, 1, 1]);
 			t1 += performance.now()-t0;
-//			console.timeEnd("поворот " + gd);
 
-//			console.time("отрисовка " + gd);
-			//gl.clearColor(0.0, 0.0, 0.0, 1.0);  
-			//gl.clear(gl.COLOR_BUFFER_BIT); 
 			setMatrixUniforms();
 			t0 = performance.now();
 			gl.clear(gl.COLOR_BUFFER_BIT); 
@@ -165,9 +160,7 @@ window.onload=function(){
 			
 			t2 += performance.now()-t0;
 			nn++;
-			
-//			console.timeEnd("отрисовка " + gd);
-//			console.log(performance.now());
+
 			gd += Math.PI/1000;
 			if (gd>=Math.sin(Math.PI/4)) {
 				console.log("avg " + nn + " t1:" + t1/nn + " t2:" + t2/nn);
