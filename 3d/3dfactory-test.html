@@ -76,7 +76,12 @@ f3d.objects.forEach(function(p) {
 console.timeEnd("треугольники");
 
 f3d.objects.forEach(function(p) {
+	let t0 = 0, t1 = 0, t2 = 0;
 	console.log(typeof p + " вершин: " + p.vertexes.length);
+	t0 = performance.now();
+	f3d.move(p,{x:Math.random(), y:Math.random(), z:Math.random()});
+	f3d.scale(p,{x:Math.random(), y:Math.random(), z:Math.random()});
+	t2 += performance.now()-t0;
 //	p.vertexes.forEach(function(e) {
 //		console.log(e);
 //	});
@@ -84,7 +89,7 @@ f3d.objects.forEach(function(p) {
 //		console.log(e);
 //		console.log(p.vertexes[e.a],p.vertexes[e.b]);
 //	});
-	console.log("треугольников: " + p.triangles.length);
+	console.log("треугольников: " + p.triangles.length + " move+scale:" + t2 + "ms");
 });
 
 	</script>

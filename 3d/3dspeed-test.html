@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>3D in WebGL!</title>
+<title>3D speed test</title>
 <meta charset="utf-8" />
 </head>
 <body>
+<p>
+<input type="number" maxlength="25" size="40" placeholder="Кол-во фигур" id="num_col" pattern="^[0-9]+$">
+<input type="button" id="btnLoad" value="Запуск теста" onclick="doTest(document.getElementById('num_col').value)">
+</p>
 <canvas id="canvas3D" style="border: 1px solid black;" width="400" height="400">Ваш браузер не поддерживает элемент canvas</canvas>
 <script  type="text/javascript" src="gl-matrix.js"></script>
+<script  type="text/javascript" src="3dfactory-1.js"></script>
 <!-- фрагментный шейдер -->
 <script id="shader-fs" type="x-shader/x-fragment">
   void main(void) {
@@ -71,22 +76,84 @@ function getShader(type,id) {
     return shader;  
 }
  // установка буферов вершин и индексов
-function initBuffers() {
+function initBuffers(cnt) {
+	let fgs = [
+	[
+		{x:0,y:0,z:0},
+		{x:0,y:1,z:0},
+		{x:0,y:0,z:1},
+		{x:1,y:0,z:0}
+	],
+	[
+		{a:0,b:1},
+		{a:0,b:2},
+		{a:0,b:3},
+		{a:1,b:2},
+		{a:1,b:3},
+		{a:2,b:3}
+	],
+	[
+		{x:0,y:0,z:0},
+		{x:0,y:1,z:0},
+		{x:0,y:0,z:1},
+		{x:0,y:1,z:1},
+		{x:1,y:0,z:0},
+		{x:1,y:1,z:0},
+		{x:1,y:0,z:1},
+		{x:1,y:1,z:1}
+	],
+	[
+		{a:0,b:1},
+		{a:0,b:2},
+		{a:0,b:4},
+		{a:1,b:3},
+		{a:1,b:5},
+		{a:2,b:3},
+		{a:2,b:6},
+		{a:3,b:7},
+		{a:4,b:5},
+		{a:4,b:6},
+		{a:5,b:7},
+		{a:6,b:7}
+	]];
+	
+	//console.log(fgs);
+	let f3d = new Factory3D();
+	
+	for (let f=0; f<cnt; f+=2) {
+		for (let fg=0; (fg<2) && (f+fg<cnt); fg++) {
+			f3d.polyhedron(fgs[fg*2],fgs[fg*2+1]);
+		}
+	}
+	
+	f3d.objects.forEach(function(p) {
+		let v1 = {x:Math.random()-0.5, y:Math.random()-0.5, z:Math.random()-0.5}
+		let v2 = {x:Math.random()*0.5, y:Math.random()*0.5, z:Math.random()*0.5}
+		p.scale(v2);
+		p.move(v1);
+	});
  
-    var vertices =[
-                // лицевая часть
-                -0.5, -0.5, 0.5,
-                -0.5, 0.5, 0.5,
-                 0.5, 0.5, 0.5,
-                 0.5, -0.5, 0.5,
-                // задняя часть 
-                -0.5, -0.5, -0.5,
-                -0.5, 0.5, -0.5,
-                 0.5, 0.5, -0.5,
-                 0.5, -0.5, -0.5];
-                  
-    var indices = [0, 1, 1, 2, 2, 3, 3, 0, 0, 4, 4, 5, 5, 6, 6,7, 7,4, 1, 5, 2, 6, 3, 7];
-     
+    let vertices = [];
+	let indices = [];
+	let dix = 0;
+	
+	console.log("фигур: " + f3d.objects.length);
+	//console.log(f3d.objects);
+	
+	f3d.objects.forEach(function(p) {
+		p.vertexes.forEach(function(v) {
+			vertices.push(v.x);
+			vertices.push(v.y);
+			vertices.push(v.z);
+		});
+		p.edges.forEach(function(e) {
+			indices.push(e.a + dix);
+			indices.push(e.b + dix);
+		});
+		dix = vertices.length/3;
+	});
+	
+   
  // установка буфера вершин
   vertexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
@@ -122,7 +189,7 @@ function setupWebGL()
     //mat4.rotate(mvMatrix,mvMatrix, 1.10, [0.2, 0.3, 0.4]);
 }
   
-window.onload=function(){
+function doTest(cnt){
  
     var canvas = document.getElementById("canvas3D");
     try {
@@ -137,8 +204,7 @@ window.onload=function(){
         gl.viewportWidth = canvas.width;
         gl.viewportHeight = canvas.height;
         initShaders();
-         
-        initBuffers();
+        initBuffers(cnt);
         setupWebGL();
         setMatrixUniforms();
         draw(); 

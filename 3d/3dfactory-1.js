@@ -6,11 +6,49 @@ class Factory3D {
 	
 	polyhedron (vertexes,edges) {
 		let obj = {};
-		obj.vertexes = vertexes;
-		obj.edges = edges;
+		obj.vertexes = [];
+		obj.edges = [];
+		vertexes.forEach(function(e) {
+			obj.vertexes.push(Object.assign({}, e));
+		});
+		edges.forEach(function(e) {
+			obj.edges.push(Object.assign({}, e));
+		});
+		obj.id = this.objects.length+1;
+		obj.move = function (vect) {
+				this.vertexes.forEach(function(e) {
+					e.x += vect.x;
+					e.y += vect.y;
+					e.z += vect.z;
+				});
+			};
+		obj.scale = function (vect) {
+				this.vertexes.forEach(function(e) {
+					e.x *= vect.x;
+					e.y *= vect.y;
+					e.z *= vect.z;
+				});
+			}
 		this.objects.push(obj);
-//		console.log("Objects: " + this.objects.length);
+		//console.log(obj);
+		//console.log("Objects: " + this.objects.length);
 		return obj;
+	}
+	
+	move (obj, vect) {
+		obj.vertexes.forEach(function(e) {
+			e.x += vect.x;
+			e.y += vect.y;
+			e.z += vect.z;
+		});
+	}
+	
+	scale (obj, vect) {
+		obj.vertexes.forEach(function(e) {
+			e.x *= vect.x;
+			e.y *= vect.y;
+			e.z *= vect.z;
+		});
 	}
 	
 	triangles (obj) {
