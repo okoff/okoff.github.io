@@ -12,13 +12,13 @@
 <canvas id="canvas3D" style="border: 1px solid black;" width="400" height="400">Ваш браузер не поддерживает элемент canvas</canvas>
 <script  type="text/javascript" src="gl-matrix.js"></script>
 <script  type="text/javascript" src="3dfactory-1.js"></script>
-<!-- фрагментный шейдер -->
+
 <script id="shader-fs" type="x-shader/x-fragment">
   void main(void) {
     gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
   }
 </script>
-<!-- вершинный шейдер -->
+
 <script id="shader-vs" type="x-shader/x-vertex">
   attribute vec3 aVertexPosition;
   uniform mat4 uMVMatrix;
@@ -53,14 +53,13 @@ function initShaders() {
  
     shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
     gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
-    // создания переменных uniform для передачи матриц в шейдер
     shaderProgram.MVMatrix = gl.getUniformLocation(shaderProgram, "uMVMatrix");
 }
  
 function setMatrixUniforms(){
     gl.uniformMatrix4fv(shaderProgram.MVMatrix, false, mvMatrix);  
 } 
-// Функция создания шейдера
+
 function getShader(type,id) {
      
     var source = document.getElementById(id).innerHTML;
@@ -75,7 +74,7 @@ function getShader(type,id) {
     }
     return shader;  
 }
- // установка буферов вершин и индексов
+
 function initBuffers(cnt) {
 	let fgs = [
 	[
@@ -153,28 +152,24 @@ function initBuffers(cnt) {
 		dix = vertices.length/3;
 	});
 	
-   
- // установка буфера вершин
-  vertexBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+	vertexBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
  
-  vertexBuffer.itemSize = 3;
+	vertexBuffer.itemSize = 3;
  
-  // создание буфера индексов
-  indexBuffer = gl.createBuffer();
+	indexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
-    // указываем число индексов это число равно числу индексов
     indexBuffer.numberOfItems = indices.length;
 }
   
 function draw() {    
-     
     gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 
                          vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
     gl.drawElements(gl.LINES, indexBuffer.numberOfItems, gl.UNSIGNED_SHORT,0);
 }
+
 function setupWebGL()
 {
     gl.clearColor(0.9, 0.9, 0.9, 1.0);  
