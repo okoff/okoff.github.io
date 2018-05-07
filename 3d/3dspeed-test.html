@@ -15,7 +15,7 @@
 
 <script id="shader-fs" type="x-shader/x-fragment">
   void main(void) {
-    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+    gl_FragColor = vec4(0.1, 0.1, 0.9, 1.0);
   }
 </script>
 
@@ -140,17 +140,25 @@ function initBuffers(cnt) {
 	//console.log(f3d.objects);
 	
 	f3d.objects.forEach(function(p) {
+		f3d.triangles(p);
 		p.vertexes.forEach(function(v) {
 			vertices.push(v.x);
 			vertices.push(v.y);
 			vertices.push(v.z);
 		});
-		p.edges.forEach(function(e) {
+//		p.edges.forEach(function(e) {
+//			indices.push(e.a + dix);
+//			indices.push(e.b + dix);
+//		});
+		p.triangles.forEach(function(e) {
 			indices.push(e.a + dix);
 			indices.push(e.b + dix);
+			indices.push(e.c + dix);
 		});
 		dix = vertices.length/3;
 	});
+	
+//	console.log(indices);
 	
 	vertexBuffer = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
@@ -161,20 +169,23 @@ function initBuffers(cnt) {
 	indexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
-    indexBuffer.numberOfItems = indices.length;
+	indexBuffer.numberOfItems = indices.length;
 }
   
 function draw() {    
     gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 
                          vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
-    gl.drawElements(gl.LINES, indexBuffer.numberOfItems, gl.UNSIGNED_SHORT,0);
+//	gl.drawElements(gl.LINES, indexBuffer.numberOfItems, gl.UNSIGNED_SHORT,0);
+	gl.drawElements(gl.TRIANGLES, indexBuffer.numberOfItems, gl.UNSIGNED_SHORT,0);
 }
 
 function setupWebGL()
 {
     gl.clearColor(0.9, 0.9, 0.9, 1.0);  
-    gl.clear(gl.COLOR_BUFFER_BIT);  
-                 
+//	gl.enable(gl.CULL_FACE);
+    gl.enable(gl.DEPTH_TEST);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
     gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
     //mat4.perspective(pMatrix, 1.4, gl.viewportWidth / gl.viewportHeight, -0.1, 100.0);
 	//mat4.ortho(pMatrix, 0, gl.viewportWidth, gl.viewportHeight, 0, 0.1, 10.0);
@@ -216,8 +227,9 @@ function doTest(cnt){
 
 			setMatrixUniforms();
 			t0 = performance.now();
-			gl.clear(gl.COLOR_BUFFER_BIT); 
-			gl.drawElements(gl.LINES, indexBuffer.numberOfItems, gl.UNSIGNED_SHORT,0);
+			gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+//			gl.drawElements(gl.LINES, indexBuffer.numberOfItems, gl.UNSIGNED_SHORT,0);
+			gl.drawElements(gl.TRIANGLES, indexBuffer.numberOfItems, gl.UNSIGNED_SHORT,0);
 			
 			t2 += performance.now()-t0;
 			nn++;
