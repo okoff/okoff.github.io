@@ -1,0 +1,22 @@
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+class Animal as "  Animal  "
+class Cat    as "    Cat   "
+class Leg    as "    Leg   "
+class Tail   as "   Tail   "
+Animal <|-- Cat : AKO \n(cat is a kind of animal)
+Cat *-- Leg : Has Part \n(cat have legs)
+Cat *-- Tail : Has Part \n(cat have tail)
+hide members
+hide circle
+hide methods
+class Cat1 as "Allegra:Cat"
+class Tail1 as "Allegra:Tail"
+Cat <-- Cat1 : Is a\n(Allegra is a cat)
+Cat1 *-- Tail1
+Tail <-- Tail1 : Is a\n(Allegra's tail is a tail)
+@enduml

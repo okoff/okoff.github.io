@@ -1,0 +1,26 @@
+@startuml
+skinparam actor {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+actor actor
+rectangle rectangle
+artifact artifact
+rectangle --> artifact : flow
+boundary boundary
+card card
+cloud cloud
+component component
+control control
+database database
+entity entity
+file file
+folder folder
+frame frame
+node node
+package package
+queue queue
+storage storage
+usecase usecase
+@enduml

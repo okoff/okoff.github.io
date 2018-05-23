@@ -1,0 +1,27 @@
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+skinparam note {
+	BorderColor Black
+}
+class "Student" as Person {
+Computer
+Output Activity(Input, Control)
+}
+note left #white: Class assumes many instances
+class "John: Student" as Person1 {
+Mechanism = John's computer
+Output Activity(Input, Control)
+}
+note left #white: Each object is an instance of a class
+class "Mary: Student" as Person2 {
+Mechanism = Mary's computer
+Output Activity(Input, Control)
+}
+Person <-- Person1 : Is a\n(John is a student)
+Person <-- Person2 : Is a\n(Mary is a student)
+hide circle
+@enduml

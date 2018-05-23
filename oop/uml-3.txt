@@ -1,0 +1,24 @@
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+class "Student" as Person1 {
+mechanism Computer
+solution Receive (original_data, timely)
+}
+class "Programmer" as Person2 {
+mechanism Computer
+program Develop (letters, algorithm)
+}
+class "Team" as Person3 {
+mechanism Members[]
+goal Reach (specification, schedule)
+}
+class "Peter:Painter" as Person4 {
+mechanism Brush
+portrait Paint (model, style)
+}
+hide circle
+@enduml
