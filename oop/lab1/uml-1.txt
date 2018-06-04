@@ -4,9 +4,9 @@ skinparam class {
 	ArrowColor Black
 	BorderColor Black
 }
-class "Person" as P {
-mechanism M
-O A (I, O)
+class "P?" as P {
+ M?
+O? A? (I?, C?)
 }
 hide circle
 @enduml
