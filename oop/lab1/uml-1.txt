@@ -1,0 +1,12 @@
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+class "Person" as P {
+mechanism M
+O A (I, O)
+}
+hide circle
+@enduml
