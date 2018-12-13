@@ -1,0 +1,70 @@
+@startuml
+skinparam actor {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+autonumber
+
+actor "U" as user
+boundary "Веб-приложение" as app
+control "ajax" as http
+control "http" as web
+control "php" as php
+entity "память" as mem
+control "контроллер" as ctl
+boundary "wire" as wire
+
+user -> app: submit
+app -> http
+activate http
+http -> web: post
+activate web
+
+== store ==
+
+web -> php: store()
+activate php
+loop
+   php -> mem: lamp.store
+   activate mem
+   mem --> php: ok
+   deactivate mem
+end
+php --> web: ok
+deactivate php
+
+== set ==
+
+web -> php: set()
+activate php
+
+php -> mem: lamp.getlist
+activate mem
+mem -> php: list
+
+loop
+   php -> mem: find
+   mem -> php: lamp
+   php -> ctl: lamp.set
+   activate ctl
+   ctl -> wire: power
+   activate wire
+   wire --> ctl: ok
+   deactivate wire
+   ctl --> php: ok
+   deactivate ctl
+end
+deactivate mem
+php --> web: ok
+deactivate php
+
+== ==
+
+web --> http: ok
+deactivate web
+http --> app: ok
+deactivate http
+
+app --> user
+@enduml

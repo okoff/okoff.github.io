@@ -1,0 +1,38 @@
+@startuml
+autonumber
+
+actor "мастер" as user
+boundary "приложение" as app
+control "ajax" as ajax
+control "http" as web
+control "php" as php
+entity "память" as mem
+control "контроллер" as ctl
+
+user -> app
+app -> ajax
+activate ajax
+ajax -> web
+activate web
+
+web -> php
+activate php
+php -> mem
+activate mem
+mem --> php
+deactivate mem
+
+php -> ctl
+activate ctl
+ctl --> php
+deactivate ctl
+
+php --> web
+deactivate php
+web --> ajax
+deactivate web
+ajax --> app
+deactivate ajax
+
+app --> user
+@enduml

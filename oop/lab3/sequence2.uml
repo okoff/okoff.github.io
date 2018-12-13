@@ -1,0 +1,50 @@
+@startuml
+autonumber
+
+actor "мастер" as user
+boundary "браузер" as app
+control "paint" as pai
+entity "render tree" as tree
+control "render" as ren
+entity "CSS OM" as css
+entity "DOM" as dom
+control "js" as js
+control "ajax" as ajax
+control "http" as web
+
+user -> app
+app -> js
+activate js
+js -> ajax
+activate ajax
+ajax -> web
+activate web
+
+web ->] 
+web <--]
+
+web --> ajax
+deactivate web
+ajax --> js
+deactivate ajax
+js -> dom: JQuery
+activate dom
+js -> css: JQuery
+deactivate js
+activate css
+dom -> ren
+deactivate dom
+activate ren
+css -> ren
+deactivate css
+ren -> tree
+deactivate ren
+activate tree
+tree -> pai
+deactivate tree
+activate pai
+pai -> app
+deactivate pai
+
+app --> user
+@enduml
