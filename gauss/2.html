@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+<!--подключаем файл стилей-->	
+<!link rel='stylesheet' href='main.css' type='text/css' media='all' />	
+<!--подключаем jquery, чтоб не скачивать, подключаем по ссылке последнюю версию-->
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+<!--->	
+<!--подключаем свой js файл, где будем писать функции-->
+<!script src="main.js" type="text/javascript"></script>
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+function avgg(n,m,v){
+  var i,j,r,a,b=0,c=0,t=0,d='',s;
+  $('#a').text("...");
+  for(var i=0;i<n;i++){
+    s=m;
+    if(v){
+      s=s-50+Math.floor(Math.random()*100+1);
+    }
+    a=0;
+    b=b+s;
+    for (j=0;j<s;j++){
+      r=Math.random();
+      a=a+r;
+      t=t+r;
+    }
+    a=a/s;
+    c=c+a;
+    //d=d+' '+i+':'+s+' '+a+'<br>';
+  }
+  c=c/n;
+  d=d+'Среднее средних='+c+'<br>';
+  t=t/b;
+  d=d+'Общее среднее='+t+'<br>';
+  d=d+'Отклонение='+Math.abs(t-c)+'<br>';
+  $('#a').html(d);
+	}
+	
+  $(document).ready(function (){ 	
+    $("#submit").click(function(){
+	  N=parseInt($('#n').val());
+      if(isNaN(N)) {N=0}
+	  M=parseInt($('#m').val());
+      if(isNaN(N)) {M=0}
+      V=$('#v:checked').val();
+      //alert('N='+N+' M='+M+' V='+V);
+      avgg(N,M,V);
+      $('#n').val(N);
+      $('#m').val(M);
+    });
+	});
+</script>
+</head>
+<body>
+	<div id="input" class="input">
+    <br>Подмассивов:
+		<input type=number min="1" id="n" value="100"/>
+    <br>Размер подмассива:
+		<input type=number min="1" id="m" value="100"/>
+    <br><input type=checkbox id="v">Варировать размер подмассива
+    <br><button id="submit">Посчитать среднее</button>
+	</div>
+	<div id="output" class="output">
+	  <div id="a" style='width:95%;text-align:left;font-weight:bold;padding:10px;'></div>
+	</div> 
+</body>
