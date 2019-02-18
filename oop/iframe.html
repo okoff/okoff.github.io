@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Отчет о лабораторных</title>
+<meta charset="utf-8" />
+<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+</head>
+<body>
+<h2>Лабораторная 1</h2>
+<a href="https://github.com/stankin/design-2019/wiki/lab1">ссылка</a>
+<div id="result" width="100%" height="600" align="left" border="1"></div>
+    <script>
+        $(document).ready( function(){
+          $.ajax({
+            method: "GET",
+            url: "https://github.com/stankin/design-2019/wiki/lab1",
+            success: function(data){
+              var content = data;
+              $("#result").html(content);
+            }
+          });
+        });
+    </script>
+</iframe>
+</body>
+</html>
