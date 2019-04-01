@@ -1,0 +1,214 @@
+<!--
+  Copyright (c) 2006-2018, JGraph Ltd
+  
+  Hello, World! example for mxGraph. This example demonstrates using
+  a DOM node to create a graph and adding vertices and edges.
+-->
+<html>
+<head>
+	<title>Hello, World! example for mxGraph</title>
+
+	<!-- Sets the basepath for the library if not in same directory -->
+	<script type="text/javascript">
+		mxBasePath = '.\src';
+	</script>
+
+	<!-- Loads and initializes the library -->
+	<script type="text/javascript" src=".\src\mxClient.js"></script>
+
+	<!-- Example code -->
+	<script type="text/javascript">
+		// Program starts here. Creates a sample graph in the
+		// DOM node with the specified ID. This function is invoked
+		// from the onLoad event handler of the document (see below).
+		
+		function main(container)
+		{
+
+	function UmlActorShape()
+	{
+		mxShape.call(this);
+	};
+	
+			// Checks if the browser is supported
+			if (!mxClient.isBrowserSupported())
+			{
+				// Displays an error message if the browser is not supported.
+				mxUtils.error('Browser is not supported!', 200, false);
+			}
+			else
+			{
+				// Disables the built-in context menu
+				mxEvent.disableContextMenu(container);
+				
+				// Creates the Graph inside the given container
+				var Graph = new mxGraph(container);
+				// Enables rubberband selection
+				new mxRubberband(Graph);
+				
+				// Auto-resizes the container
+				Graph.border = 80;
+				Graph.getView().translate = new mxPoint(Graph.border/2, Graph.border/2);
+				Graph.setResizeContainer(true);
+				//Graph.GraphHandler.setRemoveCellsFromParent(false);
+
+	mxUtils.extend(UmlActorShape, mxShape);
+	UmlActorShape.prototype.paintBackground = function(c, x, y, w, h)
+	{
+		c.translate(x, y);
+
+		// Head
+		c.ellipse(w / 4, 0, w / 2, h / 4);
+		c.fillAndStroke();
+
+		c.begin();
+		c.moveTo(w / 2, h / 4);
+		c.lineTo(w / 2, 2 * h / 3);
+		
+		// Arms
+		c.moveTo(w / 2, h / 3);
+		c.lineTo(0, h / 3);
+		c.moveTo(w / 2, h / 3);
+		c.lineTo(w, h / 3);
+		
+		// Legs
+		c.moveTo(w / 2, 2 * h / 3);
+		c.lineTo(0, h);
+		c.moveTo(w / 2, 2 * h / 3);
+		c.lineTo(w, h);
+		c.end();
+		
+		c.stroke();
+	};
+
+	// Replaces existing actor shape
+	mxCellRenderer.registerShape('umlActor', UmlActorShape);
+
+				// Changes the default vertex style in-place
+				var style = Graph.getStylesheet().getDefaultVertexStyle();
+				style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_SWIMLANE;
+				style[mxConstants.STYLE_VERTICAL_ALIGN] = 'middle';
+				style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = 'white';
+				style[mxConstants.STYLE_FONTSIZE] = 11;
+				style[mxConstants.STYLE_STARTSIZE] = 22;
+				style[mxConstants.STYLE_HORIZONTAL] = false;
+				style[mxConstants.STYLE_FONTCOLOR] = 'black';
+				style[mxConstants.STYLE_STROKECOLOR] = 'black';
+				delete style[mxConstants.STYLE_FILLCOLOR];
+
+				style = mxUtils.clone(style);
+				style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE;
+				style[mxConstants.STYLE_FONTSIZE] = 10;
+				style[mxConstants.STYLE_ROUNDED] = false;
+				style[mxConstants.STYLE_HORIZONTAL] = true;
+				style[mxConstants.STYLE_VERTICAL_ALIGN] = 'middle';
+				delete style[mxConstants.STYLE_STARTSIZE];
+				style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = 'none';
+				Graph.getStylesheet().putCellStyle('process', style);
+				
+				style = mxUtils.clone(style);
+				style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_ELLIPSE;
+				style[mxConstants.STYLE_PERIMETER] = mxPerimeter.EllipsePerimeter;
+				delete style[mxConstants.STYLE_ROUNDED];
+				Graph.getStylesheet().putCellStyle('state', style);
+												
+				style = mxUtils.clone(style);
+				style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RHOMBUS;
+				style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RhombusPerimeter;
+				style[mxConstants.STYLE_VERTICAL_ALIGN] = 'top';
+				style[mxConstants.STYLE_SPACING_TOP] = 40;
+				style[mxConstants.STYLE_SPACING_RIGHT] = 64;
+				Graph.getStylesheet().putCellStyle('condition', style);
+								
+				style = mxUtils.clone(style);
+				style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_DOUBLE_ELLIPSE;
+				style[mxConstants.STYLE_PERIMETER] = mxPerimeter.EllipsePerimeter;
+				style[mxConstants.STYLE_SPACING_TOP] = 28;
+				style[mxConstants.STYLE_FONTSIZE] = 14;
+				style[mxConstants.STYLE_FONTSTYLE] = 1;
+				delete style[mxConstants.STYLE_SPACING_RIGHT];
+				Graph.getStylesheet().putCellStyle('end', style);
+				
+				style = Graph.getStylesheet().getDefaultEdgeStyle();
+				style[mxConstants.STYLE_EDGE] = mxEdgeStyle.ElbowConnector;
+				style[mxConstants.STYLE_ENDARROW] = mxConstants.ARROW_BLOCK;
+				style[mxConstants.STYLE_ROUNDED] = false;
+				style[mxConstants.STYLE_FONTCOLOR] = 'black';
+				style[mxConstants.STYLE_STROKECOLOR] = 'black';
+				
+				style = mxUtils.clone(style);
+				style[mxConstants.STYLE_DASHED] = false;
+				style[mxConstants.STYLE_EDGE] = mxEdgeStyle.Connector;
+				style[mxConstants.STYLE_ENDARROW] = mxConstants.ARROW_OPEN;
+				style[mxConstants.STYLE_STARTARROW] = mxConstants.ARROW_OVAL;
+				Graph.getStylesheet().putCellStyle('crossover', style);
+						
+				// Installs double click on middle control point and
+				// changes style of edges between empty and this value
+				Graph.alternateEdgeStyle = 'elbow=vertical';
+				Graph.setTolerance(20);				
+				
+				// Gets the default parent for inserting new cells. This
+				// is normally the first child of the root (ie. layer 0).
+				var parent = Graph.getDefaultParent();
+								
+				// Adds cells to the model in a single step
+				Graph.getModel().beginUpdate();
+				try
+				{
+				//	var v0 = Graph.insertVertex(parent, null, null, 0, 0, 404, 304, 'process;strokeColor=gray');
+					var v_in  = Graph.insertVertex(parent, null, null, 1, 1, 1, 300, 'process;strokeColor=red');
+					var v_ctl = Graph.insertVertex(parent, null, null, 1, 1, 400, 1, 'process;strokeColor=green');
+					var v_mec = Graph.insertVertex(parent, null, null, 1, 300, 400, 1, 'process;strokeColor=brown');
+					var v_out = Graph.insertVertex(parent, null, null, 400, 1, 1, 300, 'process;strokeColor=blue');
+					var v1 = Graph.insertVertex(parent, null, 'Планировать', 40, 80, 80, 30, 'process');
+					var v2 = Graph.insertVertex(parent, null, 'Делать', 160, 140, 80, 30, 'process');
+					var v3 = Graph.insertVertex(parent, null, 'Проверить', 280, 200, 80, 30, 'process');
+				//	var vc1 = Graph.insertVertex(parent, v0, null, 80, 40, 8, 8, 'condition');
+					var e0 = Graph.insertEdge(parent, null, 'X', v_in, v1, 'edgeStyle=elbowEdgeStyle;elbow=horizontal;exitX=0;exitY=0.311;entryX=0;entryY=0.5;entryPerimeter=1;strokeColor=red;labelBackgroundColor=Yellow');
+					var e3 = Graph.insertEdge(parent, null, 'Y', v3, v_out, 'edgeStyle=elbowEdgeStyle;elbow=horizontal;exitX=1;exitY=0.5;exitPerimeter=1;entryX=0;entryY=0.71;entryPerimeter=1;strokeColor=blue;labelBackgroundColor=Yellow');
+					var e1 = Graph.insertEdge(parent, null, 'Д1', v1, v2, 'labelBackgroundColor=White');
+					var e2 = Graph.insertEdge(parent, null, 'Д2', v2, v3, 'labelBackgroundColor=White');
+				//	var e4 = Graph.insertEdge(parent, v0, 'C', v_ctl, vc1, 'edgeStyle=elbowEdgeStyle;elbow=vertical;entryX=0.5;entryY=0;entryPerimeter=1;exitX=0.2;exitY=0;strokeColor=green;labelBackgroundColor=Yellow');
+					var e4 = Graph.insertEdge(parent, null, 'C1', v_ctl, v1, 'edgeStyle=elbowEdgeStyle;exitX=0.498;exitY=0;elbow=vertical;entryX=0.5;entryY=0;entryPerimeter=1;strokeColor=green;labelBackgroundColor=Yellow');
+					var e5 = Graph.insertEdge(parent, null, 'C2', v_ctl, v2, 'edgeStyle=elbowEdgeStyle;exitX=0.498;exitY=0;elbow=vertical;entryX=0.5;entryY=0;entryPerimeter=1;strokeColor=green;labelBackgroundColor=Yellow');
+					var e6 = Graph.insertEdge(parent, null, 'C3', v_ctl, v3, 'edgeStyle=elbowEdgeStyle;exitX=0.498;exitY=0;elbow=vertical;entryX=0.5;entryY=0;entryPerimeter=1;strokeColor=green;labelBackgroundColor=Yellow');
+					var e7 = Graph.insertEdge(parent, null, 'A1', v_mec, v1, 'edgeStyle=elbowEdgeStyle;elbow=vertical;entryX=0.5;entryY=1;entryPerimeter=1;exitX=0.2;exitY=0;exitPerimeter=1;strokeColor=brown;labelBackgroundColor=Yellow');
+					var e8 = Graph.insertEdge(parent, null, 'A2', v_mec, v2, 'edgeStyle=elbowEdgeStyle;elbow=vertical;entryX=0.5;entryY=1;entryPerimeter=1;exitX=0.2;exitY=0;exitPerimeter=1;strokeColor=brown;labelBackgroundColor=Yellow');
+					var e9 = Graph.insertEdge(parent, null, 'A3', v_mec, v3, 'edgeStyle=elbowEdgeStyle;elbow=vertical;entryX=0.5;entryY=1;entryPerimeter=1;exitX=0.2;exitY=0;exitPerimeter=1;strokeColor=brown;labelBackgroundColor=Yellow');
+					
+					var u1 = Graph.insertVertex(parent, null, 'Планировать', 160, 340, 80, 30, 'state;strokeColor=black;fillColor=white');
+					var u2 = Graph.insertVertex(parent, null, 'Делать', 	 160, 380, 80, 30, 'state;strokeColor=black;fillColor=white');
+					var u3 = Graph.insertVertex(parent, null, 'Проверить', 	 160, 420, 80, 30, 'state;strokeColor=black;fillColor=white');
+					var a = Graph.insertVertex(parent, null, 'A', 	 5, 380, 30, 30, 'umlActor;strokeColor=black;fillColor=white;labelBackgroundColor=Yellow');
+					var a1 = Graph.insertVertex(parent, null, 'A1', 	 80, 340, 30, 30, 'umlActor;strokeColor=black;fillColor=white;labelBackgroundColor=Yellow');
+					var a2 = Graph.insertVertex(parent, null, 'A2', 	 80, 380, 30, 30, 'umlActor;strokeColor=black;fillColor=white;labelBackgroundColor=Yellow');
+					var a3 = Graph.insertVertex(parent, null, 'A3', 	 80, 420, 30, 30, 'umlActor;strokeColor=black;fillColor=white;labelBackgroundColor=Yellow');
+					var e11 = Graph.insertEdge(parent, null, null, a1, u1, ';edgeStyle=orthogonal;strokeColor=red'); 
+					var e22 = Graph.insertEdge(parent, null, null, a2, u2, ';edgeStyle=orthogonal;strokeColor=red'); 
+					var e33 = Graph.insertEdge(parent, null, null, a3, u3, ';edgeStyle=orthogonal;strokeColor=red'); 
+					var e10 = Graph.insertEdge(parent, null, null, a1, a, 'edgeStyle=orthogonal;strokeColor=red'); 
+					var e20 = Graph.insertEdge(parent, null, null, a2, a, 'edgeStyle=orthogonal;strokeColor=red'); 
+					var e30 = Graph.insertEdge(parent, null, null, a3, a, 'edgeStyle=orthogonal;strokeColor=red'); 
+				//	var e1 = Graph.insertEdge(parent, v0, 'Документ', v1, v2, 'connector;strokeColor=black;fillColor=white;orthogonal');
+				//	var e2 = Graph.insertEdge(parent, v0, 'X', v0, v1,'connector;strokeColor=black;fillColor=white;orthogonal');
+				//	var e3 = Graph.insertEdge(parent, null, '', null, v2);
+				}
+				finally
+				{
+					// Updates the display
+					Graph.getModel().endUpdate();
+				}
+			}
+		};
+	</script>
+</head>
+
+<!-- Page passes the container for the Graph to the program -->
+<body onload="main(document.getElementById('GraphContainer'))">
+	<!-- Creates a container for the Graph with a grid wallpaper -->
+	<div id="GraphContainer"
+		style="position:relative;overflow:hidden;width:321px;height:241px;background:none;cursor:default;">
+	</div>
+</body>
+</html>
