@@ -1,0 +1,7 @@
+﻿[
+{"name_role":"Исполнитель","exec_num":"2", "cost_hour":"200", "downtime_cost":"200"},
+{"name_role":"Эксперт","exec_num":"2", "cost_hour":"400", "downtime_cost":"200"},
+{"name_role":"Оператор","exec_num":"2", "cost_hour":"100", "downtime_cost":"200"},
+{"name_role":"Исполнитель заключени¤","exec_num":"2", "cost_hour":"300", "downtime_cost":"200"},
+{"name_role":"Контролер","exec_num":"2", "cost_hour":"100", "downtime_cost":"200"}
+]
