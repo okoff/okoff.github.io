@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Стенд тестирования функции планирования</title>
+<meta charset="utf-8" />
+<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function (){ 	
+  var stepname = "";
+  var init = false;
+//window.onerror = function(msg, url, lineNo, columnNo, error) {
+//	alert(stepname +":\n" + msg + "\n" + url);
+//	return false;
+//  }
+  $("#submit").click(function(){
+	let scriptname = $("#module").val();
+	alert(scriptname + "\nrequested\n" + js);
+	try {
+		//$.getScript(scriptname);
+		if (init) {
+		  let el = document.getElementsByTagName('script')[0];
+		  //el.parentNode.removeChild(el);
+		  el.remove();
+		}
+		var firstScript = document.getElementsByTagName('script')[0];
+		var js = document.createElement('script');
+		js.src = scriptname;
+		js.onload = function () {
+			alert(scriptname + " loaded");
+			try {
+				let sort = $("#sort").val();
+				let plan = [{"id":"1","part":"xbtm","q":"1000"}];
+				let prom = [{"id":"1","part":"xbtm","q":"1000"}];
+				let schedule = do_plan(sort, plan, prom);
+			}  catch(e) {
+				alert(scriptname +":\n" + e.name + "\n" + e.message);
+			}
+		};
+		js.onerror = function () {
+			alert (scriptname +":\n не найден");
+		}
+		firstScript.parentNode.insertBefore(js, firstScript);
+		init = true;
+	} catch(e) {
+		alert(scriptname +":<br>" + e.name + "<br>" + e.message);
+	}
+  })
+});
+</script>
+
+</head>
+
+<body>
+	<div id="input" class="input">
+		<br>Скрипт с функцией планирования:
+			<input type=text size=60 id="module" value="plan.js"/>
+		<br>Порядок сортировки:
+			<input type=number min="1" id="sort" value="1"/>
+		<br><input type=checkbox id="v">Выводить исходные данные
+		<br><button id="submit">Запустить проверку</button>
+		</div>
+		<div id="output" class="output">
+		  <div id="a" style='width:95%;text-align:left;font-weight:bold;padding:10px;'></div>
+		</div> 
+</body>
+</html>
