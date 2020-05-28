@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Стенд тестирования функции планирования</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./submit.js"></script>
+    <link rel="stylesheet" href="./styles.css" />
+    <!--script src="./sb.js"></script-->
+</head>
+
+<body>
+    <div id="input" class="input">
+        <br>Скрипт с функцией планирования:
+        <input type=text size=60 id="module" value="plan.js" />
+        <br>
+        <br>Контрольный пример (Объемный план):
+        <input type=text size=60 id="plan" value="plan.json" />
+        <br>
+        <br>Контрольный пример (Ответ от Рабочих центров):
+        <input type=text size=60 id="wc_list" value="WC_list.json" />
+        <br>
+        <br>Порядок сортировки:
+        <select name="sort" id="sort" size="1">
+            <option value="q">Качество</option>
+            <option value="c">Стоимость</option>
+            <option value="t">Время</option>
+        </select>
+        <br><input type=checkbox id="v">Выводить исходные данные
+        <br>
+        <br><button id="get" onclick="test()">Запустить проверку</button>
+    </div>
+    <div>
+        <textarea name="log" id="log" cols="30" rows="10" readonly></textarea>
+    </div>
+    <div id="tables" class='hidden'>
+        <table>
+            <thead>
+                <th>ID продукта</th>
+                <th>Количество, шт</th>
+                <th>Срок выполнения</th>
+                <th>Ожидаемый брак, %</th>
+                <th>Стоимость, шт</th>
+            </thead>
+            <tbody id="plan_table"></tbody>
+        </table>
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Рабочий центр</th>
+                <th>ID Плана</th>
+                <th>Деталь</th>
+                <th>Операция</th>
+                <th>Количество, шт</th>
+                <th>Время, сек</th>
+                <th>Ожидаемый брак, %</th>
+                <th>Стоимость, шт</th>
+            </thead>
+            <tbody id="WC_table"></tbody>
+        </table>
+    </div>
+</body>
+
+</html>
