@@ -34,8 +34,12 @@ $(document).ready(function (){
 //	return false;
 //  }
   $("#submit").click(function(){
+	document.getElementById('a').innerHTML = "..............";
+	document.getElementById('b').innerHTML = "..............";
+	document.getElementById('c').innerHTML = "..............";
+
 	let scriptname = $("#module").val();
-	alert(scriptname + "\nrequested\n" + js);
+	console.log(scriptname + "\nrequested\n" + js);
 	try {
 		//$.getScript(scriptname);
 		if (init) {
@@ -47,7 +51,7 @@ $(document).ready(function (){
 		var js = document.createElement('script');
 		js.src = scriptname;
 		js.onload = function () {
-			alert(scriptname + " loaded");
+			console.log(scriptname + " loaded");
 			try {
 				let srt = $("#sort").val();
 				let pln = 
@@ -870,21 +874,22 @@ $(document).ready(function (){
          "P": ""
       }
 ];
-				let sch = plan(pln, prm, srt);
 				document.getElementById('a').innerHTML = maketable(pln);
 				document.getElementById('b').innerHTML = maketable(prm);
+
+				let sch = plan(pln, prm, srt);
 				document.getElementById('c').innerHTML = maketable(sch);
 			}  catch(e) {
-				alert(scriptname +":\n" + e.name + "\n" + e.message);
+				console.log(scriptname +":\n" + e.name + "\n" + e.message);
 			}
 		};
 		js.onerror = function () {
-			alert (scriptname +":\n не найден");
+			console.log(scriptname +":\n не найден");
 		}
 		firstScript.parentNode.insertBefore(js, firstScript);
 		init = true;
 	} catch(e) {
-		alert(scriptname +":<br>" + e.name + "<br>" + e.message);
+		console.log(scriptname +":<br>" + e.name + "<br>" + e.message);
 	}
   })
 });
