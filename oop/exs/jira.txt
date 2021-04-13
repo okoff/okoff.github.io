@@ -1,0 +1,66 @@
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+hide circle
+hide methods
+left to right direction
+package ProjectEntity as "Проект" {
+	class PrjCat as "Категория проекта" {
+		id : integer
+		name : string
+	}
+	class Project as "Проект" {
+		id : integer
+		cat_id : integer
+		key : string
+	}
+	class Staff as "Команда" {
+		prj_id : integer
+		usr_id : integer
+		rol_id : integer
+	}
+	class Role as "Роль" {
+		id : integer
+		name : string
+	}
+}
+PrjCat::id *-- Project::cat_id : "1 .. N"
+Project *-l- Staff : "1 .. N"
+Staff -l-* Role : "N .. 1"
+
+package IssueEntity as "Задача" {
+	class Issue as "Задача" {
+		id : integer
+		prj_id : integer
+		typ_id : integer
+		sta_id : integer
+		usr_id : integer
+	}
+	Project::id *-- Issue::prj_id : "1 .. N"
+	Staff::id *-- Issue::usr_id : "1 .. N"
+	class IssueType as "Тип задачи" {
+		id : integer
+		name: string
+	}
+	Issue::typ_id --* IssueType::id : "N .. 1"
+	class IssueStat as "Статус задачи" {
+		id : integer
+		name: string
+	}
+	Issue::sta_id --* IssueStat::id : "N .. 1"
+	class Depends as "Зависимость" {
+		id : integer
+		dep_id : integer
+		dep_type : integer
+	}
+	Issue *-l- Depends : "1 .. N"
+	class SubTask as "Подзадача" {
+		id : integer
+		pnt_id : integer
+	}
+	Issue *-l- SubTask : "1 .. N"
+}
+@enduml
